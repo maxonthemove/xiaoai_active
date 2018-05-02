@@ -1,6 +1,12 @@
 package pers.wangdj.xiaoai_active.activity.demo;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.ActivityManager;
+import android.app.AppOpsManager;
+import android.app.usage.UsageStats;
+import android.app.usage.UsageStatsManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,35 +15,39 @@ import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-
-import com.baidu.speech.EventManager;
-import com.baidu.speech.EventManagerFactory;
 
 import com.baidu.speech.EventListener;
+import com.baidu.speech.EventManager;
+import com.baidu.speech.EventManagerFactory;
 import com.baidu.speech.asr.SpeechConstant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
 import pers.wangdj.xiaoai_active.R;
 import pers.wangdj.xiaoai_active.activity.pub.BaseActivity;
 import pers.wangdj.xiaoai_active.utils.Constants;
 import pers.wangdj.xiaoai_active.utils.NotificationUtil;
+
+import static android.provider.Settings.ACTION_USAGE_ACCESS_SETTINGS;
 
 /**
  * 项目名：  AndroidCommonProject
@@ -53,17 +63,13 @@ public class DemoActivity extends BaseActivity implements View.OnClickListener, 
 
     protected Button btnDemoButton;
     protected Button btnDemoButtonForResult;
-    private String ivwNetMode = "0";
-    // 语音唤醒对象
-    private String keep_alive = "1";
-    private int curThresh = 20;
-    private int num = 0;
     private NotificationUtil notificationUtil;//通知 工具类
     private boolean isActive = false;
     private LocalBroadcastManager localBroadcastManager;
     private LocalReceiver localReceiver;
     private IntentFilter intentFilter;
     private EventManager wakeup;
+    private Button dashang;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,7 +101,7 @@ public class DemoActivity extends BaseActivity implements View.OnClickListener, 
                     Manifest.permission.ACCESS_NETWORK_STATE,
                     Manifest.permission.INTERNET,
                     Manifest.permission.READ_PHONE_STATE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
             };
 
             ArrayList<String> toApplyList = new ArrayList<String>();
@@ -122,7 +128,8 @@ public class DemoActivity extends BaseActivity implements View.OnClickListener, 
         btnDemoButton.setOnClickListener(DemoActivity.this);
         btnDemoButtonForResult = findViewById(R.id.btn_demo_button_for_result);
         btnDemoButtonForResult.setOnClickListener(DemoActivity.this);
-
+        dashang=findViewById(R.id.dashang);
+        dashang.setOnClickListener(DemoActivity.this);
 
     }
 
@@ -148,6 +155,10 @@ public class DemoActivity extends BaseActivity implements View.OnClickListener, 
         } else if (view.getId() == R.id.btn_demo_button_for_result) {
 //            startActivityForResult(actionStartForResult("464655465555", "2641"), Constants.requestCode350);
             shutDownWakeUper();
+
+        }else if(view.getId()==R.id.dashang){
+            Intent intent = new Intent(DemoActivity.this,DashangActivity.class);
+            startActivity(intent);
 
         }
     }
@@ -204,8 +215,9 @@ public class DemoActivity extends BaseActivity implements View.OnClickListener, 
             public void run() {
                 try {
                     do {
-                        Thread.sleep(3000);
-                        Log.d(TAG, "run:休眠 3s ");
+                        Log.d(TAG, "run:休眠 1.5 s ");
+                        Thread.sleep(1500);
+//                        getTopActivity(DemoActivity.this);
                     } while (!validateMicAvailability());
                     startWakeUper(false);
                 } catch (InterruptedException e) {
@@ -274,6 +286,17 @@ public class DemoActivity extends BaseActivity implements View.OnClickListener, 
                 if (jsonObject.getString("errorDesc").equals("wakup success")) {
                     //唤醒 已经打开 并且说出了唤醒词 暂时关闭唤醒 等待小爱占用麦克风
                     shutDownWakeUperForSomeTime();
+                    //唤醒成功
+                    Intent intent = getPackageManager().getLaunchIntentForPackage("com.miui.voiceassist");
+                    if (intent != null) {
+                        // 这里跟Activity传递参数一样的嘛，不要担心怎么传递参数，还有接收参数也是跟Activity和Activity传参数一样
+                        intent.putExtra("name", "Liu xiang");
+                        intent.putExtra("birthday", "1983-7-13");
+                        startActivity(intent);
+                    } else {
+                        // 未安装应用
+                        showToast("您的手机未安装 小爱同学");
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -298,5 +321,20 @@ public class DemoActivity extends BaseActivity implements View.OnClickListener, 
             }
         }
     }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    void getTopActivity(Context context) {
+        ActivityManager mActivityManager = (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
+        if (Build.VERSION.SDK_INT > 20) {
+            String mPackageName = mActivityManager.getRunningAppProcesses().get(0).processName;
+            Log.d(TAG, "getTopActivity: " + mPackageName);
+            String mpackageName = mActivityManager.getAppTasks().get(0).getTaskInfo().topActivity.getPackageName();
+            Log.d(TAG, "getTopActivity: " + mpackageName);
+        } else {
+            String mpackageName = mActivityManager.getRunningTasks(1).get(0).topActivity.getPackageName();
+            Log.d(TAG, "getTopActivity: " + mpackageName);
+        }
+    }
+
 
 }

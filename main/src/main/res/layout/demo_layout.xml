@@ -3,33 +3,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="      使用小爱语音唤醒功能，需要将本应用设置为一直保持运行的状态。具体请百度。"
-    android:layout_marginTop="20dp"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="      开启小爱语音唤醒，会占用麦克风权限。使用其他app提示麦克风占用。点击关闭语音唤醒可解决。"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
-
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:text="    使用小爱语音唤醒功能，需要将本应用设置为 保持运行 的状态，不能被系统自动清理掉。具体请百度。" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="    开启小爱语音唤醒，会占用麦克风权限。使用其他app提示麦克风占用。通知栏提供了快速切换功能解决此问题。" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="    通知栏可以随时切换开启关闭状态，系统设置里不要屏蔽此应用的通知。" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="    本应用仅提供给 MIUI9 的用户，安卓8.0。仅供尝鲜，MIUI的语音唤醒更新之后请卸载。" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:textAlignment="center"
+        android:text="呼唤 小爱同学 吧！" />
     <Button
         android:id="@+id/btn_demo_button"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:text="@string/button"
-        android:layout_marginTop="20dp"/>
-
+        android:layout_marginTop="10dp"
+        android:text="@string/button" />
     <Button
+        android:id="@+id/btn_demo_button_for_result"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:text="@string/button"
-        android:layout_marginTop="80dp"
-        android:id="@+id/btn_demo_button_for_result"/>
+        android:layout_marginTop="10dp"
+        android:text="@string/button" />
+    <Button
+        android:id="@+id/dashang"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:text="纯个人制作  打赏点此  o(*￣▽￣*)o" />
 
 </LinearLayout>

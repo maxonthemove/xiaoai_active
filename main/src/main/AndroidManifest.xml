@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="pers.wangdj.xiaoai_active">
 
     <!--&lt;!&ndash; To auto-complete the email text field in the login form with the user's emails &ndash;&gt;-->
@@ -40,6 +41,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <!--如需使用人脸识别，还要添加：摄相头权限，拍照需要用到 -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
 
     <!-- 允许访问振动设备(Allows access to the vibrator) -->
     <!--<uses-permission android:name="android.permission.VIBRATE" />-->
@@ -130,6 +133,7 @@
             android:name="pers.wangdj.xiaoai_active.activity.GuideActivity"
             android:theme="@style/NoActivityFullScreen" />
 
+        <activity android:name=".activity.demo.DashangActivity"></activity>
         <receiver android:name="pers.wangdj.xiaoai_active.activity.NotificationReceiver">
             <intent-filter>
                 <action android:name="notification_cancelled"/>
