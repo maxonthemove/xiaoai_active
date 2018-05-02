@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Active</string>
+    <string name="button">Button</string>
+    <string name="startActivity">startActivity</string>
+    <string name="startActivityForResult">startActivityForResult</string>
+    <string name="textview">TextView</string>
+    <string name="app_id">5ae28f23</string>
+</resources>

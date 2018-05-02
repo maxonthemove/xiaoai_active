@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="      使用小爱语音唤醒功能，需要将本应用设置为一直保持运行的状态。具体请百度。"
+    android:layout_marginTop="20dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="      开启小爱语音唤醒，会占用麦克风权限。使用其他app提示麦克风占用。点击关闭语音唤醒可解决。"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+
+    <Button
+        android:id="@+id/btn_demo_button"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="@string/button"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="@string/button"
+        android:layout_marginTop="80dp"
+        android:id="@+id/btn_demo_button_for_result"/>
+
+</LinearLayout>

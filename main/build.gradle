@@ -1,0 +1,51 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "pers.wangdj.xiaoai_active"
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        // 开启分包
+        multiDexEnabled true
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    // aar包添加
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs','./src/jniLibs']
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    testCompile 'junit:junit:4.12'
+    androidTestCompile 'com.android.support.test:runner:1.0.1'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.1'
+    // 引入分包 application，需要在 Manifest.xml中注明 application类 ，并且在这个类中继承这个包，或者重写方法。
+    compile 'com.android.support:multidex:1.0.2'
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    compile 'com.tencent.bugly:crashreport:2.6.6.1'
+    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+    compile 'com.tencent.bugly:nativecrashreport:3.3.1'
+    //gson  json格式化工具
+    compile 'com.google.code.gson:gson:2.8.0'
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <include
+        domain="sharedpref"
+        path="." />
+</full-backup-content>
+
+    <!--<full-backup-content>
+    <include domain=["file" | "database" | "sharedpref" | "external" | "root"]
+    path="string" />
+    <exclude domain=["file" | "database" | "sharedpref" | "external" | "root"]
+    path="string" />
+    </full-backup-content>-->
+
+    <!-- Each element must include the following two attributes:
+
+     domain - specifies the location of resource. Valid values for this attribute include the following:
+
+     root - the directory on the filesystem where all private files belonging to this app are stored.
+
+     file - directories returned by getFilesDir().
+
+     database - directories returned by getDatabasePath(). Databases created with SQLiteOpenHelper are stored here.
+
+     sharedpref - the directory where SharedPreferences are stored.
+
+     external the directory returned by getExternalFilesDir()
+
+     Note: You cannot backup files outside of these locations
+
+     -->
