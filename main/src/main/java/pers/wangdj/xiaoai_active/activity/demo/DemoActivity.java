@@ -1,12 +1,8 @@
 package pers.wangdj.xiaoai_active.activity.demo;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
-import android.app.AppOpsManager;
-import android.app.usage.UsageStats;
-import android.app.usage.UsageStatsManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,12 +11,9 @@ import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -37,17 +30,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
 import java.util.TreeMap;
 
 import pers.wangdj.xiaoai_active.R;
 import pers.wangdj.xiaoai_active.activity.pub.BaseActivity;
 import pers.wangdj.xiaoai_active.utils.Constants;
 import pers.wangdj.xiaoai_active.utils.NotificationUtil;
-
-import static android.provider.Settings.ACTION_USAGE_ACCESS_SETTINGS;
 
 /**
  * 项目名：  AndroidCommonProject
@@ -215,8 +204,8 @@ public class DemoActivity extends BaseActivity implements View.OnClickListener, 
             public void run() {
                 try {
                     do {
-                        Log.d(TAG, "run:休眠 1.5 s ");
-                        Thread.sleep(1500);
+                        Log.d(TAG, "run:休眠 2 s ");
+                        Thread.sleep(2000);
 //                        getTopActivity(DemoActivity.this);
                     } while (!validateMicAvailability());
                     startWakeUper(false);
